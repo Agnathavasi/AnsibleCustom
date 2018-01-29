@@ -1,0 +1,11 @@
+- name: Apache installation
+  yum: name=httpd state=present
+  
+
+- name: Copy file
+  template: src=httpd.j2 dest=/etc/httpd/conf/httpd.conf
+  notify: Apache start
+
+- name: Copy index file
+  template: src=index.j2 dest={{ doc_root }}/index.html
+  

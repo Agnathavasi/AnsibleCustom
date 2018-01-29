@@ -1,0 +1,24 @@
+---
+- hosts: all
+  remote_user: root
+  sudo: yes
+
+  vars:
+   download_path: /opt
+   Jdk_Name: jdk-7u80-linux-x64.tar.gz
+   Install_Path: /opt/jdk1.7.0_80
+
+  tasks:
+ 
+   - name: Copying the binaries
+     copy: src={{download_path}}/{{Jdk_Name}} dest={{download_path}} force=yes
+
+   - name: Java Installation
+     command: tar -zxf {{ download_path }}/{{ Jdk_Name }} -C /opt
+
+   - name: Permissions Change
+     file: group=root owner=root mode=777 path={{ Install_Path }} state=directory recurse=yes
+
+   - name: Path setting
+     template: src=./templates/java.j2 dest=/etc/profile.d/java.sh owner=root group=root mode=755
+
