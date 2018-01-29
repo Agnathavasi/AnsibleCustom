@@ -3,7 +3,7 @@
 - hosts: dbservers
   roles:
     - { role: server-common }
-    - { role: dbserver, when: testdb is defined and db==test }
+    - { role: dbserver, when: testdb is defined and db=="test" }
   sudo: yes
   gather_facts: no
 
